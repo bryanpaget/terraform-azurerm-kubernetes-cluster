@@ -32,7 +32,7 @@ Ensure your virtual network IP space does not overlap with the subnets defined i
 ```terraform
 module "cluster" {
   source = "git::https://github.com/canada-ca-terraform-modules/terraform-azurerm-kubernetes-cluster.git?ref=$REF"
-  
+
   # ... your variable values
 }
 ```
@@ -73,4 +73,4 @@ module "cluster" {
 
 | Date       | Release     | Change          |
 | -----------| ------------| ----------------|
-| 2021-02-28 | 1.0.0-rc0   | Initial release |
+| 2021-07-06 | 1.0.0       | Initial release |
