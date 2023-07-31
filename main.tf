@@ -66,7 +66,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     outbound_type = "userDefinedRouting"
 
     # Load balancer
-    load_balancer_sku = "Standard"
+    load_balancer_sku = "standard"
 
     # IP ranges
     docker_bridge_cidr = var.docker_bridge_cidr
