@@ -40,19 +40,19 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   # Encryption
   disk_encryption_set_id = var.disk_encryption_set_id
 
+  # Components
+  azure_policy_enabled             = false
+  http_application_routing_enabled = false
+
   # Identity / RBAC
   identity {
-    type                      = "UserAssigned"
-    user_assigned_identity_id = var.user_assigned_identity_id
+    type         = "UserAssigned"
+    identity_ids = [var.user_assigned_identity_id]
   }
 
-  role_based_access_control {
-    enabled = true
-
-    azure_active_directory {
-      managed                = true
-      admin_group_object_ids = var.admin_group_object_ids
-    }
+  azure_active_directory_role_based_access_control {
+    managed                = true
+    admin_group_object_ids = var.admin_group_object_ids
   }
 
   # Network configuration
@@ -93,7 +93,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     name                 = var.default_node_pool_name
     node_count           = !var.default_node_pool_enable_auto_scaling ? var.default_node_pool_node_count : null
     orchestrator_version = var.default_node_pool_kubernetes_version != null ? var.default_node_pool_kubernetes_version : var.kubernetes_version
-    availability_zones   = var.default_node_pool_availability_zones
+    zones                = var.default_node_pool_availability_zones
     enable_auto_scaling  = var.default_node_pool_enable_auto_scaling
     min_count            = var.default_node_pool_enable_auto_scaling ? var.default_node_pool_auto_scaling_min_nodes : null
     max_count            = var.default_node_pool_enable_auto_scaling ? var.default_node_pool_auto_scaling_max_nodes : null
@@ -122,27 +122,12 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     }
   }
 
-  # Addons
-  addon_profile {
-    aci_connector_linux {
-      enabled = false
-    }
-
-    azure_policy {
-      enabled = false
-    }
-
-    http_application_routing {
-      enabled = false
-    }
-
-    kube_dashboard {
-      enabled = false
-    }
-
-    oms_agent {
-      enabled = false
-    }
+  storage_profile {
+    blob_driver_enabled         = var.storage_profile.blob_driver_enabled
+    disk_driver_enabled         = var.storage_profile.disk_driver_enabled
+    disk_driver_version         = var.storage_profile.disk_driver_version
+    file_driver_enabled         = var.storage_profile.file_driver_enabled
+    snapshot_controller_enabled = var.storage_profile.snapshot_controller_enabled
   }
 
   tags = var.tags
