@@ -44,6 +44,10 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   azure_policy_enabled             = false
   http_application_routing_enabled = false
 
+  # Azure Image Cleaner
+  image_cleaner_enabled        = true
+  image_cleaner_interval_hours = 48
+
   # Identity / RBAC
   identity {
     type         = "UserAssigned"
