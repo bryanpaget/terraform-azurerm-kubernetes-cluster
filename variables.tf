@@ -227,3 +227,18 @@ variable "storage_profile" {
     snapshot_controller_enabled = true
   }
 }
+
+variable "azure_image_cleaner" {
+  type = object({
+    image_cleaner_enabled        = bool
+    image_cleaner_interval_hours = number
+  })
+
+  description = "Azure Image Cleaner Toggler and Time Interval Setter."
+
+  default = {
+    image_cleaner_enabled        = false
+    image_cleaner_interval_hours = 48
+  }
+
+}
