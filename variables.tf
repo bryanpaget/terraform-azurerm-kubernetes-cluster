@@ -240,5 +240,4 @@ variable "azure_image_cleaner" {
     image_cleaner_enabled        = false
     image_cleaner_interval_hours = 48
   }
-
 }
