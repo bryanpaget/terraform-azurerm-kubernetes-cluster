@@ -45,8 +45,8 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   http_application_routing_enabled = false
 
   azure_image_cleaner {
-    var.azure_image_cleaner.image_cleaner_enabled
-    var.azure_image_cleaner.image_cleaner_interval_hours
+    image_cleaner_enabled        = var.azure_image_cleaner.image_cleaner_enabled
+    image_cleaner_interval_hours = var.azure_image_cleaner.image_cleaner_interval_hours
   }
 
   # Identity / RBAC
